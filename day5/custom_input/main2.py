@@ -1,25 +1,18 @@
-crates_input = []
 f = open('data.txt', "r")
-while True:
-    line = f.readline()
-    if not line.strip():
-        break
-    crates_input.append(line[:-1])
-
-number_of_columns = len([x for x in crates_input[-1].split(" ") if x])
+number_of_columns = int(f.readline().strip())
 crates = [[] for x in range(number_of_columns)]
-
-for i in range(1, number_of_columns*4, 4):
-    for crate in crates_input[:-1]:
-        if crate[i].strip():
-            crates[(i//4)].append(crate[i])
-
-while True:
+line = f.readline().strip()
+while line:
+    for idx, letter in enumerate(line.split("|")):
+        if letter:
+            crates[idx].append(letter)
     line = f.readline().strip()
-    if not line:
-        break
+
+line = f.readline().strip()
+while line:
     amount, from_crate_index, to_crate_index = [int(s) for s in line.split() if s.isdigit()]
     crates[to_crate_index - 1] = crates[from_crate_index - 1][:amount:] + crates[to_crate_index - 1]
     crates[from_crate_index - 1] = crates[from_crate_index - 1][amount:]
+    line = f.readline().strip()
 
 print("".join(x[0] for x in crates))
