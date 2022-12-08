@@ -7,7 +7,7 @@ for x in range(1, length - 1):
     for y in range(1, length - 1):
         cur = forest[x][y]
         distances = [len(list(takewhile(lambda v: v[y] < cur, forest[x - 1::-1]))),
-                     len(list(takewhile(lambda v: v[y] < cur, forest[x + 1:]))) + 1,
+                     len(list(takewhile(lambda v: v[y] < cur, forest[x + 1:]))) + 1,  # for some reason we need +1 here. If written with a simple for loop, +1 is not needed. It just works.
                      len(list(takewhile(lambda v: v < cur, forest[x][y - 1::-1]))),
                      len(list(takewhile(lambda v: v < cur, forest[x][y + 1:])))]
         score = 1
