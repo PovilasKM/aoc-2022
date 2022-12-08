@@ -1,8 +1,8 @@
 from itertools import takewhile
 
 forest = [(list(x)) for x in open('data.txt', "r").read().split("\n")]
-forest_scores = [row[:] for row in forest]
 length = len(forest)
+forest_scores = [[0] * length for row in forest]
 for x in range(1, length - 1):
     for y in range(1, length - 1):
         cur = forest[x][y]
@@ -14,4 +14,4 @@ for x in range(1, length - 1):
         for disc in distances:
             score *= disc
         forest_scores[x][y] = score
-print(max(sum([y[1:length - 1] for y in forest_scores[1:length - 1]], [])))
+print(max(sum(forest_scores, [])))
