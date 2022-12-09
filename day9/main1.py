@@ -1,20 +1,17 @@
-# (x, y)
+sign = lambda x: 1 if x >= 1 else -1 if x <= -1 else 0
 directions = {"R": (1, 0), "U": (0, 1), "L": (-1, 0), "D": (0, -1)}
 f = open('data.txt', "r")
 visited = set()
 visited.add((0, 0))
-hcord = (0, 0)
-tcord = (0, 0)
+h, t = (0, 0), (0, 0)
 line = f.readline().strip()
 while line:
-    direction, distance = line.split(" ")
-    for _ in range(int(distance)):
-        hcord = (hcord[0] + directions[direction][0], hcord[1] + directions[direction][1])
-        xdist, ydist = hcord[0] - tcord[0], hcord[1] - tcord[1]
-        if 1 >= xdist >= -1 and 1 >= ydist >= -1:
-            continue  # don't move t
-        tcord = (tcord[0] + (1 if xdist >= 1 else -1 if xdist <= -1 else 0),
-                 tcord[1] + (1 if ydist >= 1 else -1 if ydist <= -1 else 0))
-        visited.add(tcord)
+    dir, dist = line.split()
+    for _ in range(int(dist)):
+        h = (h[0] + directions[dir][0], h[1] + directions[dir][1])
+        xd, yd = h[0] - t[0], h[1] - t[1]
+        if pow(xd, 2) + pow(yd, 2) > 2:
+            t = (t[0] + sign(xd), t[1] + sign(yd))
+            visited.add(t)
     line = f.readline().strip()
 print("unique: ", len(visited))

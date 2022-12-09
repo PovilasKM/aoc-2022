@@ -1,26 +1,22 @@
-# (x, y)
+sign = lambda x: 1 if x >= 1 else -1 if x <= -1 else 0
 directions = {"R": (1, 0), "U": (0, 1), "L": (-1, 0), "D": (0, -1)}
 f = open('data.txt', "r")
 visited = set()
 visited.add((0, 0))
-hcord = (0, 0)
-tcords = [(0, 0) for x in range(9)]
+hcord, tcords = (0, 0), [(0, 0) for x in range(9)]
 line = f.readline().strip()
 while line:
-    direction, distance = line.split(" ")
-    for _ in range(int(distance)):
-        hcord = (hcord[0] + directions[direction][0], hcord[1] + directions[direction][1])
-        current_hcord = hcord
-        for idx, current_tcord in enumerate(tcords):
-            xdist, ydist = current_hcord[0] - current_tcord[0], current_hcord[1] - current_tcord[1]
-            if 1 >= xdist >= -1 and 1 >= ydist >= -1:
-                current_hcord = current_tcord
+    dir, dist = line.split()
+    for _ in range(int(dist)):
+        hcord = (hcord[0] + directions[dir][0], hcord[1] + directions[dir][1])
+        cur_h = hcord
+        for idx, cur_t in enumerate(tcords):
+            xd, yd = cur_h[0] - cur_t[0], cur_h[1] - cur_t[1]
+            if pow(xd, 2) + pow(yd, 2) <= 2:
+                cur_h = cur_t
                 continue  # don't move t
-            tcords[idx] = (current_tcord[0] + (1 if xdist >= 1 else -1 if xdist <= -1 else 0),
-                           current_tcord[1] + (1 if ydist >= 1 else -1 if ydist <= -1 else 0))
-            if idx == 8:
-                visited.add(current_tcord)
-            current_hcord = tcords[idx]
+            tcords[idx] = (cur_t[0] + sign(xd), cur_t[1] + sign(yd))
+            cur_h = tcords[idx]
+        visited.add(tcords[-1])
     line = f.readline().strip()
-print("unique: ", len(visited) + 1)  # no idea why but it works with +1
-# oh and this +1 won't work with example data but will work with second example and my input...lmao
+print("unique: ", len(visited))
