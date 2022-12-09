@@ -1,3 +1,6 @@
+# ------------
+# OBSOLETE: part 2 works for part 1 too.
+# ------------
 sign = lambda x: 1 if x >= 1 else -1 if x <= -1 else 0
 directions = {"R": (1, 0), "U": (0, 1), "L": (-1, 0), "D": (0, -1)}
 f = open('data.txt', "r")
