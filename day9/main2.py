@@ -23,3 +23,4 @@ while line:
             current_hcord = tcords[idx]
     line = f.readline().strip()
 print("unique: ", len(visited) + 1)  # no idea why but it works with +1
+# oh and this +1 won't work with example data but will work with second example and my input...lmao
