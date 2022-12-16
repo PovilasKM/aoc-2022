@@ -35,26 +35,14 @@ for coord in coordinates:
     #     corners:
     c1, c2, c3, c4 = (c_x, c_y + d + 1), (c_x + d + 1, c_y), (c_x, c_y - d - 1), (c_x - d - 1, c_y)
     for i in range(0, d + 2):
-        #     c1->c2
-        x, y = c1[0] + i, c1[1] - i
-        if bound >= x >= 0 and bound >= y >= 0:
-            if try_point((x, y), coordinates):
-                break
-        #     c2->c3
-        x, y = c2[0] - i, c2[1] - i
-        if bound >= x >= 0 and bound >= y >= 0:
-            if try_point((x, y), coordinates):
-                break
-        #     c3->c4
-        x, y = c3[0] - i, c3[1] + i
-        if bound >= x >= 0 and bound >= y >= 0:
-            if try_point((x, y), coordinates):
-                break
-        #     c4->c1
-        x, y = c4[0] + i, c4[1] + i
-        if bound >= x >= 0 and bound >= y >= 0:
-            if try_point((x, y), coordinates):
-                break
+        points = [(c1[0] + i, c1[1] - i), (c2[0] - i, c2[1] - i), (c3[0] - i, c3[1] + i), (c4[0] + i, c4[1] + i)]
+        for x, y in points:
+            if bound >= x >= 0 and bound >= y >= 0:
+                if try_point((x, y), coordinates):
+                    break
+        else:
+            continue
+        break
     else:
         continue
     break
