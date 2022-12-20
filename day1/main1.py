@@ -1,7 +1,7 @@
 biggest = 0
 temp = 0
-for x in open('data.txt', "r"):
-    line = x.rstrip("\n")
+lines = open('data.txt', "r").read().split("\n")
+for line in lines:
     if line:
         temp += int(line)
     else:
